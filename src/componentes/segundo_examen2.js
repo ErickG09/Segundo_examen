@@ -3,25 +3,32 @@ import React, { useState } from 'react'
 const Menu = () => {
   const [monto, setMonto] = useState(0)
   const [montoConvertido, setMontoConvertido] = useState(0)
-  const [moneda, setMoneda] = useState('');
+  const [moneda, setMoneda] = useState('')
 
   const Conversion = (conversion) => {
-    const tipoDeCambio = {
-      'MXN_USD': 0.05,
-      'USD_MXN': 20,
-      'MXN_EUR': 0.045,
-      'EUR_MXN': 22.22,
-      'MXN_BTC': 0.000001,
-      'BTC_MXN': 1000000,
-      'MXN_ETH': 0.0005,
-      'ETH_MXN': 2000,
-      'MXN_DOGE': 500,
-      'DOGE_MXN': 0.002,
-    };
+    const tipo_de_cambio = {
+      'MXN_USD': 0.055,
+      'USD_MXN': 18.27,
+      'MXN_EUR': 0.052,
+      'EUR_MXN': 19.35,
+      'MXN_BTC': 0.0000016,
+      'BTC_MXN': 615584.66,
+      'MXN_ETH': 0.000031,
+      'ETH_MXN': 32349.72,
+      'MXN_DOGE': 0.83,
+      'DOGE_MXN': 1.20,
+    }
 
-    const resultado = monto * tipoDeCambio[conversion]
-    setMontoConvertido(resultado)
-  };
+    let resultado = 0
+
+    if (conversion in tipo_de_cambio) {
+      resultado = monto * tipo_de_cambio[conversion]
+    } else {
+      console.error('Error');
+    }
+
+    setMontoConvertido(resultado);
+  }
 
   const monedas = {
     MXN: 'MXN',
@@ -30,7 +37,7 @@ const Menu = () => {
     BTC: 'BTC',
     ETH: 'ETH',
     DOGE: 'DOGE',
-  };
+  }
 
   return (
     <div className="calculadora_divisas">
@@ -52,9 +59,12 @@ const Menu = () => {
         <button onClick={() => Conversion('MXN_USD')}>Convertir</button>
       </div>
 
-      {(<div className="resultado">{monto} {moneda} = {montoConvertido} {monedas[moneda]}</div>)}</div>
+    // Esta parte no me funcionó, no me da el tipo de moneda que quiero, pero la conversión está bien
+      <div className="resultado">{monto} {moneda} = {montoConvertido} {monedas[moneda]}</div>
 
-  );
-};
+      </div>
+
+  )
+}
 
 export default Menu
